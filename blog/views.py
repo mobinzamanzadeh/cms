@@ -6,8 +6,10 @@ from rest_framework.views import APIView
 from blog.models import User, Post, Comment
 from blog.serializers import UserSerializer, PostSerializer
 
+from blog.permissions import IsSuperUser, IsSuperUserOrStaffReadOnly, IsStaffOrReadOnly, IsAuthorOrReadOnly
 
 # Create your views here.
+
 
 class UserListView(APIView):
     def get(self, request, ):
@@ -16,14 +18,16 @@ class UserListView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = PostSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # permission_classes = [IsSuperUser,]
+    permission_classes = (
+        IsSuperUser,
+    )
 
 
 class UserDetailView(APIView):
@@ -52,9 +56,22 @@ class UserDetailView(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    def get_permissions(self):
+        if self.request.user == User.objects.filter(username=self.request.user):
+            self.permission_classes = (IsSuperUserOrStaffReadOnly,)
+        elif self.request.user.is_superuser:
+            self.permission_classes = (IsSuperUser,)
+        return super(UserDetailView, self).get_permissions()
+
 
 class PostListView(APIView):
     def get(self, request):
+        self.permission_classes = (
+            IsSuperUser,
+            IsStaffOrReadOnly,
+            IsAuthorOrReadOnly,
+            IsSuperUserOrStaffReadOnly,
+        )
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
@@ -62,12 +79,10 @@ class PostListView(APIView):
     def post(self, request):
         serializer = PostSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            post = serializer.save()  # The author will be automatically assigned based on the authenticated user
+            post = serializer.save()
             return Response(PostSerializer(post).data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # permission_classes = [IsAuthorOrReadOnly,]
 
 
 class PostDetailView(APIView):
