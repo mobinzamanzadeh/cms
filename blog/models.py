@@ -21,7 +21,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=225)
-    slug = models.SlugField(
+    slug = models.CharField(
         max_length=225,
         unique=True,
     )
