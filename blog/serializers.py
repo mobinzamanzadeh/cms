@@ -25,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
+
     # tag = serializers.ReadOnlyField()
     # category = serializers.ReadOnlyField(source='category.name')
 
@@ -38,9 +39,4 @@ class PostSerializer(serializers.ModelSerializer):
         return post
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.username')
 
-    class Meta:
-        model = Comment
-        fields = ['id', 'content', 'author', 'created_at']
