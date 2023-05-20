@@ -45,11 +45,11 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post_slug = models.ForeignKey(
-        Post.slug,
+    post = models.ForeignKey(
+        Post,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='comment',
+        related_name='post_comment',
     )
     author = models.ForeignKey(
         User,
