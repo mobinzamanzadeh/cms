@@ -23,19 +23,19 @@ class Post(models.Model):
     title = models.CharField(max_length=225)
     slug = models.SlugField(
         max_length=225,
-        unique=True
+        unique=True,
     )
     author = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
-        null=True
+        null=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()
     status = models.IntegerField(
         choices=((0, "Draft"), (1, "Publish"), (2, "Delete")),
-        default=0
+        default=0,
     )
     tag = models.ManyToManyField(Tag)
     category = models.ManyToManyField(Category)
@@ -49,11 +49,12 @@ class Comment(models.Model):
         Post.slug,
         on_delete=models.SET_NULL,
         null=True,
-        related_name='comment'
+        related_name='comment',
     )
     author = models.ForeignKey(
         User,
-        on_delete=models.CASCADE
+        on_delete=models.SET_NULL,
+        null=True,
     )
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
