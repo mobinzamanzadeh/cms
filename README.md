@@ -29,17 +29,17 @@ To get started with the project, follow these steps:
 4. Apply database migrations: `python manage.py migrate`
 5. Create a superuser: `python manage.py createsuperuser`
 6. Start the development server: `python manage.py runserver`
-7. Access the API documentation at `http://localhost:8000/api/docs/`
+7. Access the API documentation at `http://localhost:8000/`
 8. Explore the API endpoints and start building your application!
 
 ## API Endpoints
 
-- `/api/users/`: List all users or create a new user.
-- `/api/users/{username}/`: Retrieve, update, or delete a specific user.
-- `/api/posts/`: List all posts or create a new post.
-- `/api/posts/{slug}/`: Retrieve, update, or delete a specific post.
-- `/api/posts/{slug}/comments/`: List all comments for a specific post or create a new comment.
-- `/api/posts/{slug}/comments/{pk}/`: Retrieve, update, or delete a specific comment.
+- `/users/`: List all users or create a new user.
+- `/users/{username}/`: Retrieve, update, or delete a specific user.
+- `/posts/`: List all posts or create a new post.
+- `/posts/{slug}/`: Retrieve, update, or delete a specific post.
+- `/posts/{slug}/comments/`: List all comments for a specific post or create a new comment.
+- `/posts/{slug}/comments/{pk}/`: Retrieve, update, or delete a specific comment.
 
 ## Customization
 
