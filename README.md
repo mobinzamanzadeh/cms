@@ -93,4 +93,7 @@ This project was developed by [Mobin Zamanzadeh](https://github.com/mobinzamanza
 
 ## Contact
 
-If you have any questions or suggestions, feel free to
+If you have any questions or suggestions, feel free to reach out:
+
+- Email: [mobin.zamanzadeh@gmail.com](mailto:mobin.zamanzadeh@gmail.com)
+- GitHub: [mobinzamanzadeh](https://github.com/mobinzamanzadeh)
