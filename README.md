@@ -18,7 +18,6 @@ This is a Django Content Management System (CMS) project developed using Django 
 - Django Rest Framework (DRF): A flexible toolkit for building APIs with Django.
 - PostgreSQL: A robust relational database management system.
 - dj-rest-auth: A library for handling user authentication and registration in Django Rest Framework.
-- Docker: A platform for containerizing applications and simplifying deployment.
 
 ## Getting Started
 
