@@ -39,4 +39,17 @@ class PostSerializer(serializers.ModelSerializer):
         return post
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    replies = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'post', 'author', 'content', 'created_at', 'parent', 'replies']
+        read_only_fields = ['id', 'created_at']
+
+    def get_replies(self, obj):
+        serializer = self.__class__(obj.children(), many=True)
+        serializer.bind('', self)
+        return serializer.data
+
 
