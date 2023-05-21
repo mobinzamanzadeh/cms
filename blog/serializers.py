@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Post, Comment, User, Tag
+from blog.models import Post, Comment, User, Tag, Category
 from rest_framework.authtoken.models import Token
 
 
@@ -23,11 +23,22 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['name']
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
-
-    # tag = serializers.ReadOnlyField()
-    # category = serializers.ReadOnlyField(source='category.name')
+    tag = TagSerializer(many=True, read_only=True)
+    category = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Post

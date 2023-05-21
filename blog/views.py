@@ -167,3 +167,8 @@ class CommentDetailView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class TemplateView(APIView):
+    def __int__(self, request):
+        return render('salam')

@@ -1,7 +1,8 @@
 from dj_rest_auth.views import PasswordResetConfirmView
 from django.contrib import admin
 from django.urls import path, include
-from blog.views import UserListView, UserDetailView, PostListView, PostDetailView, CommentListView, CommentDetailView
+from blog.views import UserListView, UserDetailView, PostListView, PostDetailView, CommentListView, CommentDetailView, \
+    TemplateView
 
 urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
