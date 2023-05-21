@@ -82,9 +82,6 @@ The following API endpoints are available:
 
 For authentication and registration endpoints, please refer to the [dj-rest-auth documentation](https://dj-rest-auth.readthedocs.io/).
 
-## License
-
-This project is licensed under the [MIT License](LICENSE). Feel free to use and modify it according to your needs.
 
 ## Contributing
 
@@ -92,7 +89,7 @@ Contributions are welcome! If you find any issues or want to add new features, p
 
 ## Credits
 
-This project was developed by [Your Name](https://github.com/your-username).
+This project was developed by [Mobin Zamanzadeh](https://github.com/mobinzamanzadeh).
 
 ## Contact
 
