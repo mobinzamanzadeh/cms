@@ -134,6 +134,9 @@ class CommentListView(APIView):
 
 
 class CommentDetailView(APIView):
+
+    permission_classes = (IsSuperUser,)
+
     def get_object(self, pk):
         try:
             return Comment.objects.get(pk=pk)
