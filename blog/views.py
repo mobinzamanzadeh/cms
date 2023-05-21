@@ -105,18 +105,32 @@ class PostDetailView(APIView):
 
 
 class CommentListView(APIView):
-    def get(self, request):
-        comments = Comment.objects.all()
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+    def get_post(self, slug):
+        try:
+            return Post.objects.get(slug=slug)
+        except Post.DoesNotExist:
+            return None
 
-    def post(self, request):
-        serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(author=request.user)
+    def get(self, request, slug):
+        post = self.get_post(slug)
+        if post:
+            comments = Comment.objects.filter(post=post)
+            serializer = CommentSerializer(comments, many=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request, slug):
+        post = self.get_post(slug)
+        if post:
+            serializer = CommentSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(author=request.user, post=post)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CommentDetailView(APIView):
@@ -126,15 +140,15 @@ class CommentDetailView(APIView):
         except Comment.DoesNotExist:
             return None
 
-    def get(self, request, pk):
+    def get(self, request, slug, pk):
         comment = self.get_object(pk)
         if comment:
             serializer = CommentSerializer(comment)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def put(self, request, pk):
+    def put(self, request, slug, pk):
         comment = self.get_object(pk)
         if comment:
             serializer = CommentSerializer(comment, data=request.data)
@@ -146,7 +160,7 @@ class CommentDetailView(APIView):
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    def delete(self, request, pk):
+    def delete(self, request, slug, pk):
         comment = self.get_object(pk)
         if comment:
             comment.delete()

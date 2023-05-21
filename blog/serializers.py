@@ -48,8 +48,7 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at']
 
     def get_replies(self, obj):
-        serializer = self.__class__(obj.children(), many=True)
+        serializer = self.__class__(obj.children, many=True)
         serializer.bind('', self)
         return serializer.data
-
 
